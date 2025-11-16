@@ -1,0 +1,16 @@
+{
+  "node_type": "custom-ai",
+  "version": "1.0.0",
+  "label": {
+    "en_US": "Custom AI",
+    "ko_KR": "커스텀 AI"
+  },
+  "description": {
+    "en_US": "Custom AI with special interface",
+    "ko_KR": "특별한 인터페이스를 가진 커스텀 AI"
+  },
+  "author": "Your Organization",
+  "category": "tool",
+  "icon": "🤖",
+  "tags": ["ai", "llm", "custom"]
+}
