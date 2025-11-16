@@ -1,0 +1,16 @@
+{
+  "node_type": "claude-code-executor",
+  "version": "1.0.0",
+  "label": {
+    "en_US": "Claude Code Executor",
+    "ko_KR": "Claude Code 실행기"
+  },
+  "description": {
+    "en_US": "Execute Claude Code CLI via API server with loop support",
+    "ko_KR": "API 서버를 통해 Claude Code CLI를 실행하고 루프를 지원합니다"
+  },
+  "author": "Your Organization",
+  "category": "tool",
+  "icon": "🤖",
+  "tags": ["claude", "code", "automation", "loop"]
+}
