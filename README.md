@@ -15,6 +15,8 @@ A complete solution for developing and deploying custom workflow nodes for Dify 
 - **📚 Auto-Discovery** - Custom nodes and panels automatically discovered at runtime
 - **🎛️ Custom Panels** - Build rich UI panels with 30+ components
 - **💾 State Management** - StateManager SDK for persistent conversation variables
+- **🔗 MCP Node Bridge** - Transform MCP tools into deterministic workflow nodes
+- **🏭 MCP Node Generator** - Auto-generate custom nodes from MCP tool schemas
 - **⚡ Interactive Installer** - Cross-platform CLI with guided setup
 - **🐳 Docker Ready** - Full Docker Compose integration
 
@@ -28,6 +30,8 @@ A complete solution for developing and deploying custom workflow nodes for Dify 
 - [Custom Panels](#custom-panels)
 - [Examples](#examples)
 - [State Management](#-state-management)
+- [MCP Node Bridge](#-mcp-node-bridge)
+- [MCP Node Generator](#-mcp-node-generator)
 - [SDK Reference](#sdk-reference)
 - [Updating Dify](#updating-dify)
 - [Contributing](#contributing)
@@ -810,6 +814,107 @@ context['intent'] = detected_intent
 context['topic_history'].append(current_topic)
 output = state.output_for_conv_var('session_context', context)
 ```
+
+## 🔗 MCP Node Bridge
+
+Transform individual MCP tools into deterministic workflow nodes for direct execution without AI orchestration.
+
+### Overview
+
+The MCP→Node Bridge allows each MCP tool registered in Dify to become a standalone workflow node:
+
+- **Deterministic** - Tools execute exactly when reached in workflow
+- **No AI overhead** - Direct tool invocation
+- **Full integration** - Variable references, outputs, connections
+
+### Quick Example
+
+```
+[Start] → [MCP: list_files] → [Iteration] → [MCP: read_file] → [LLM] → [End]
+              │                                    │
+              └─ path: {{#start.folder#}}          └─ path: {{#iteration.item#}}
+```
+
+### Node Type Naming
+
+```
+mcp-{provider_id_prefix}-{tool_name}
+
+Examples:
+- mcp-abc12345-list_files
+- mcp-abc12345-read_file
+```
+
+### Parameter Modes
+
+```json
+// Constant
+{ "path": "/documents" }
+
+// Variable reference
+{ "path": { "type": "variable", "value": ["start", "folder"] } }
+
+// Template
+{ "query": { "type": "mixed", "value": "Find {{#start.keyword#}}" } }
+```
+
+### Documentation
+
+For complete architecture, implementation details, and examples:
+- **[MCP Node Bridge Guide](./MCP_NODE_BRIDGE.md)** - Full documentation
+
+### Status
+
+- [x] Backend implementation (node, registry, mapping)
+- [ ] Frontend components (node UI, panel, palette)
+- [ ] Streaming support
+
+## 🏭 MCP Node Generator
+
+Automatically generate custom nodes from MCP tool schemas.
+
+### Quick Start
+
+```bash
+cd dify-patcher
+
+# Install dependencies
+pip install -r generator/requirements.txt
+
+# List tools from MCP server
+python -m generator list --url <your-mcp-server-url>
+
+# Generate custom nodes
+python -m generator generate \
+  --url <your-mcp-server-url> \
+  --output ./nodes
+
+# Generate specific tools only
+python -m generator generate \
+  --url <your-mcp-server-url> \
+  --output ./nodes \
+  --tools list_files read_file
+```
+
+### Generated Structure
+
+```
+nodes/mcp-list-files/
+├── manifest.json
+├── backend/
+│   └── node.py
+└── frontend/
+    ├── index.ts
+    ├── types.ts
+    ├── node.tsx
+    ├── panel.tsx
+    ├── use-config.ts
+    └── default.ts
+```
+
+### Documentation
+
+- **[MCP Node Generator Guide](./generator/README.md)** - Full documentation
 
 ## 📖 SDK Reference
 

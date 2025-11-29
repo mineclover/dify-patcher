@@ -1,0 +1,46 @@
+{
+  "node_type": "mcp-list-directory",
+  "version": "1",
+  "name": "List Directory",
+  "description": "List files and directories in a specified path. Returns file names, sizes, and modification times.",
+  "author": "MCP Node Generator",
+  "icon": "\ud83d\udccb",
+  "category": "mcp-tools",
+  "backend": {
+    "entry": "node.py",
+    "dependencies": [
+      "httpx>=0.27.0"
+    ]
+  },
+  "frontend": {
+    "entry": "index.ts"
+  },
+  "inputs": {
+    "mcp_server_url": {
+      "type": "string",
+      "title": "MCP Server URL",
+      "description": "MCP server endpoint (SSE or HTTP)",
+      "required": true
+    },
+    "path": {
+      "type": "string",
+      "title": "Path",
+      "description": "The directory path to list",
+      "required": true
+    }
+  },
+  "outputs": {
+    "text": {
+      "type": "string",
+      "description": "Text content from tool result"
+    },
+    "result": {
+      "type": "object",
+      "description": "Full tool result object"
+    },
+    "is_error": {
+      "type": "boolean",
+      "description": "Whether the tool returned an error"
+    }
+  }
+}

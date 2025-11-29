@@ -1,0 +1,74 @@
+{
+  "server_url": "http://localhost:3000/mcp/sse",
+  "tools": [
+    {
+      "name": "list_directory",
+      "description": "List files and directories in a specified path. Returns file names, sizes, and modification times.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The directory path to list"
+          }
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "read_file",
+      "description": "Read the contents of a file at the specified path. Returns the file content as text.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The file path to read"
+          }
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "write_file",
+      "description": "Write content to a file at the specified path. Creates the file if it doesn't exist.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The file path to write to"
+          },
+          "content": {
+            "type": "string",
+            "description": "The content to write to the file"
+          }
+        },
+        "required": ["path", "content"]
+      }
+    },
+    {
+      "name": "search_files",
+      "description": "Search for files matching a pattern in a directory.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The directory path to search in"
+          },
+          "pattern": {
+            "type": "string",
+            "description": "The glob pattern to match (e.g., *.txt, **/*.py)"
+          },
+          "recursive": {
+            "type": "boolean",
+            "description": "Whether to search recursively",
+            "default": false
+          }
+        },
+        "required": ["path", "pattern"]
+      }
+    }
+  ]
+}
